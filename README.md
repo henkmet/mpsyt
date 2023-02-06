@@ -1,4 +1,4 @@
-termitube
+mpsyt
 
 Note: this repository started as a fork of `mps-youtube <https://github.com/mps-youtube/yewtube/>`_ as mps-youtube went unmaintained. With the change to yewtube, some search options were lost. This version maintains using the google api. Since I maintain it mostly for myself, I can't guarantee it works on other systems etc. Pull requests welcome, though.
 
