@@ -1,8 +1,6 @@
 termitube
-===========
 
 Note: this repository started as a fork of `mps-youtube <https://github.com/mps-youtube/yewtube/>`_ as mps-youtube went unmaintained. With the change to yewtube, some search options were lost. This version maintains using the google api. Since I maintain it mostly for myself, I can't guarantee it works on other systems etc. Pull requests welcome, though.
-===========
 
 Features
 --------
@@ -27,7 +25,7 @@ Screenshots
 
 Search
 ~~~~~~
-.. image:: http://mps-youtube.github.io/yewtube/std-search.png
+![](http://mps-youtube.github.io/yewtube/std-search.png)
 
 A standard search is performed by entering ``/`` followed by search terms.
 
@@ -37,13 +35,13 @@ Repeating song/songs can be done with ``song_number[loop]``, for example: ``1[3]
 
 Local Playlists
 ~~~~~~~~~~~~~~~
-.. image:: http://mps-youtube.github.io/yewtube/local-playlist.png
+![](http://mps-youtube.github.io/yewtube/local-playlist.png)
 
 Search result items can easily be stored in local playlists.
 
 YouTube Playlists
 ~~~~~~~~~~~~~~~~~
-.. image:: http://mps-youtube.github.io/yewtube/playlist-search.png
+![](http://mps-youtube.github.io/yewtube/playlist-search.png)
 
 YouTube playlists can be searched and played or saved as local playlists.
 
@@ -51,29 +49,29 @@ A playlist search is performed by ``//`` followed by search term.
 
 Download
 ~~~~~~~~
-.. image:: http://mps-youtube.github.io/yewtube/download.png
+![](http://mps-youtube.github.io/yewtube/download.png)
 
 Content can be downloaded in various formats and resolutions.
 
 Comments
 ~~~~~~~~
-.. image:: http://mps-youtube.github.io/yewtube/comments.png
+![](http://mps-youtube.github.io/yewtube/comments.png)
 
 A basic comments browser is available to view YouTube user comments.
 
 Music Album Matching
 ~~~~~~~~~~~~~~~~~~~~
 
-.. image:: http://mps-youtube.github.io/yewtube/album-1.png
+![](http://mps-youtube.github.io/yewtube/album-1.png)
 
-.. image:: http://mps-youtube.github.io/yewtube/album-2.png
+![](http://mps-youtube.github.io/yewtube/album-2.png)
 
 An album title can be specified and mps-youtube will attempt to find matches for each track of the album, based on title and duration.  Type ``help search`` for more info.
 
 Customisation
 ~~~~~~~~~~~~~
 
-.. image:: http://mps-youtube.github.io/yewtube/customisation2.png
+![](http://mps-youtube.github.io/yewtube/customisation2.png)
 
 Search results can be customised to display additional fields and ordered by various criteria.
 
