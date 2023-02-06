@@ -24,7 +24,7 @@ Screenshots
 
 
 Search
-~~~~~~
+
 ![](http://mps-youtube.github.io/yewtube/std-search.png)
 
 A standard search is performed by entering ``/`` followed by search terms.
@@ -34,13 +34,13 @@ You can play all of the search results by giving ``1-`` as input
 Repeating song/songs can be done with ``song_number[loop]``, for example: ``1[3]`` or ``4-6[2]``
 
 Local Playlists
-~~~~~~~~~~~~~~~
+~~~~~~~~~
 ![](http://mps-youtube.github.io/yewtube/local-playlist.png)
 
 Search result items can easily be stored in local playlists.
 
 YouTube Playlists
-~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~
 ![](http://mps-youtube.github.io/yewtube/playlist-search.png)
 
 YouTube playlists can be searched and played or saved as local playlists.
@@ -48,19 +48,19 @@ YouTube playlists can be searched and played or saved as local playlists.
 A playlist search is performed by ``//`` followed by search term.
 
 Download
-~~~~~~~~
+~~
 ![](http://mps-youtube.github.io/yewtube/download.png)
 
 Content can be downloaded in various formats and resolutions.
 
 Comments
-~~~~~~~~
+~~
 ![](http://mps-youtube.github.io/yewtube/comments.png)
 
 A basic comments browser is available to view YouTube user comments.
 
 Music Album Matching
-~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
 
 ![](http://mps-youtube.github.io/yewtube/album-1.png)
 
@@ -69,7 +69,7 @@ Music Album Matching
 An album title can be specified and mps-youtube will attempt to find matches for each track of the album, based on title and duration.  Type ``help search`` for more info.
 
 Customisation
-~~~~~~~~~~~~~
+~~~~~~~
 
 ![](http://mps-youtube.github.io/yewtube/customisation2.png)
 
@@ -108,7 +108,7 @@ For mpris2 support, install the python bindings for dbus and gobject::
     $ pip3 install --user dbus-python pygobject
 
 Additional Docker notes
-~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
 
 If you would like to locally build the container you can run the following steps
 
