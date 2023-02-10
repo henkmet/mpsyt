@@ -55,7 +55,7 @@ def _search(progtext, qs=None, msg=None, failmsg=None):
     slicer = util.IterSlicer(iter_songs(), length)
 
     paginatesongs(slicer, length=length, msg=msg, failmsg=failmsg,
-            loadmsg=loadmsg)
+                  loadmsg=loadmsg)
 
 
 def token(page):
@@ -76,20 +76,20 @@ def generate_search_qs(term, match='term', videoDuration='any', after=None, cate
 
     aliases = dict(views='viewCount')
     qs = {
-        'q': term,
-        'maxResults': 50,
-        'safeSearch': "none",
-        'order': aliases.get(config.ORDER.get, config.ORDER.get),
-        'part': 'id,snippet',
-        'type': 'video',
-        'videoDuration': videoDuration,
-        'key': config.API_KEY.get
-    }
+            'q': term,
+            'maxResults': 50,
+            'safeSearch': "none",
+            'order': aliases.get(config.ORDER.get, config.ORDER.get),
+            'part': 'id,snippet',
+            'type': 'video',
+            'videoDuration': videoDuration,
+            'key': config.API_KEY.get
+            }
 
     if after:
         after = after.lower()
         qs['publishedAfter'] = '%sZ' % (datetime.utcnow() - timedelta(days=DAYS[after])).isoformat() \
-                                if after in DAYS.keys() else '%s%s' % (after, 'T00:00:00Z' * (len(after) == 10))
+                if after in DAYS.keys() else '%s%s' % (after, 'T00:00:00Z' * (len(after) == 10))
 
     if match == 'related':
         qs['relatedToVideoId'] = term
@@ -157,7 +157,7 @@ def channelfromname(user):
 
         except pafy.GdataError as e:
             g.message = "Could not retrieve information for user {}\n{}".format(
-                c.y + user + c.w, e)
+                    c.y + user + c.w, e)
             util.dbg('Error during channel request for user {}:\n{}'.format(
                 user, e))
             return
@@ -178,10 +178,10 @@ def channelsearch(q_user):
 
     QueryObj = contentquery.ContentQuery(listview.ListUser, 'search', qs)
     columns = [
-        {"name": "idx", "size": 3, "heading": "Num"},
-        {"name": "name", "size": 30, "heading": "Username"},
-        {"name": "description", "size": "remaining", "heading": "Description"},
-        ]
+            {"name": "idx", "size": 3, "heading": "Num"},
+            {"name": "name", "size": 30, "heading": "Username"},
+            {"name": "description", "size": "remaining", "heading": "Description"},
+            ]
 
     def run_m(user_id):
         """ Search ! """
@@ -219,7 +219,7 @@ def usersearch_id(user, channel_id, term):
     aliases = dict(views='viewCount')  # The value of the config item is 'views' not 'viewCount'
     if config.USER_ORDER.get:
         query['order'] = aliases.get(config.USER_ORDER.get,
-                config.USER_ORDER.get)
+                                     config.USER_ORDER.get)
     query['channelId'] = channel_id
 
     termuser = tuple([c.y + x + c.w for x in (term, user)])
@@ -266,25 +266,25 @@ def livestream_category_search(term):
         return
 
     query = {
-        "part": "id,snippet",
-        "eventType": "live",
-        "maxResults": 50,
-        "type": "video",
-        "videoCategoryId": sel_category
-    }
+            "part": "id,snippet",
+            "eventType": "live",
+            "maxResults": 50,
+            "type": "video",
+            "videoCategoryId": sel_category
+            }
 
     query_obj = contentquery.ContentQuery(listview.ListLiveStream, 'search', query)
     columns = [
-              {"name": "idx", "size": 3, "heading": "Num"},
-              {"name": "title", "size": 40, "heading": "Title"},
-              {"name": "description", "size": "remaining", "heading": "Description"},
-              ]
+            {"name": "idx", "size": 3, "heading": "Num"},
+            {"name": "title", "size": 40, "heading": "Title"},
+            {"name": "description", "size": "remaining", "heading": "Description"},
+            ]
 
     def start_stream(returned):
         songs = Playlist("Search Results", [Video(*x) for x in returned])
         if not config.PLAYER.get or not util.has_exefile(config.PLAYER.get):
             g.message = "Player not configured! Enter %sset player <player_app> "\
-                        "%s to set a player" % (c.g, c.w)
+                    "%s to set a player" % (c.g, c.w)
             return
         g.PLAYER_OBJ.play(songs, False, False, False)
 
@@ -366,8 +366,8 @@ def pl_search(term, page=0, splash=True, is_user=False):
         pldata = pafy.call_gdata('search', qs)
 
         id_list = [i.get('id', {}).get('playlistId')
-                    for i in pldata.get('items', ())
-                    if i['id']['kind'] == 'youtube#playlist']
+                   for i in pldata.get('items', ())
+                   if i['id']['kind'] == 'youtube#playlist']
 
         result_count = min(pldata['pageInfo']['totalResults'], 500)
 
@@ -453,8 +453,8 @@ def get_tracks_from_json(jsons):
 
     # fetch detailed information about items from videos API
     id_list = [get_track_id_from_json(i)
-                for i in items
-                if i['id']['kind'] == 'youtube#video']
+               for i in items
+               if i['id']['kind'] == 'youtube#video']
 
     qs = {'part':'contentDetails,statistics,snippet',
           'id': ','.join(id_list)}
@@ -498,27 +498,27 @@ def get_tracks_from_json(jsons):
 
             # cache video information in custom global variable store
             g.meta[ytid] = dict(
-                # tries to get localized title first, fallback to normal title
-                title=snippet.get('localized',
-                                  {'title':snippet.get('title',
-                                                       '[!!!]')}).get('title',
-                                                                      '[!]'),
-                length=str(util.fmt_time(cursong.length)),
-                uploader=snippet.get('channelId'),
-                uploaderName=snippet.get('channelTitle'),
-                category=category,
-                aspect="custom", #XXX
-                uploaded=publishedlocaldatetime[1],
-                uploadedTime=publishedlocaldatetime[2],
-                likes=str(num_repr(likes)),
-                commentCount=str(num_repr(int(stats.get('commentCount', 0)))),
-                viewCount=str(num_repr(int(stats.get('viewCount', 0)))))
+                    # tries to get localized title first, fallback to normal title
+                    title=snippet.get('localized',
+                                      {'title':snippet.get('title',
+                                                           '[!!!]')}).get('title',
+                                                                          '[!]'),
+                                                           length=str(util.fmt_time(cursong.length)),
+                                                           uploader=snippet.get('channelId'),
+                                                           uploaderName=snippet.get('channelTitle'),
+                                                           category=category,
+                                                           aspect="custom", #XXX
+                                                           uploaded=publishedlocaldatetime[1],
+                                                           uploadedTime=publishedlocaldatetime[2],
+                                                           likes=str(num_repr(likes)),
+                                                           commentCount=str(num_repr(int(stats.get('commentCount', 0)))),
+                                                           viewCount=str(num_repr(int(stats.get('viewCount', 0)))))
 
         except Exception as e:
 
             util.dbg(json.dumps(item, indent=2))
             util.dbg('Error during metadata extraction/instantiation of ' +
-                'search result {}\n{}'.format(ytid, e))
+                     'search result {}\n{}'.format(ytid, e))
 
         songs.append(cursong)
 
@@ -625,13 +625,13 @@ def yt_url(url: str, print_title: bool = False):
     v_ids = set()
     v_title = None
 for url in url_list:
-        try:
-            v_id = pafy.extract_video_id(url)
+    try:
+        v_id = pafy.extract_video_id(url)
             if v_id in v_ids:
                 continue
             p = pafy.get_video_info(v_id)
-        except (IOError, ValueError) as e:
-            g.message = c.r + str(e) + c.w
+    except (IOError, ValueError) as e:
+        g.message = c.r + str(e) + c.w
             g.content = g.content or content.generate_songlist_display(
                     zeromsg=g.message)
             return
