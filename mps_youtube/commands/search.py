@@ -622,14 +622,10 @@ def yt_url(url: str, print_title: bool = False):
 
     g.model.songs = []
 
-    v_ids = set()
-    v_title = None
-    for url in url_list:
+    for u in url_list:
         try:
-            v_id = pafy.extract_video_id(url)
-            if v_id in v_ids:
-                continue
-            p = pafy.get_video_info(v_id)
+            p = util.get_pafy(u)
+
         except (IOError, ValueError) as e:
             g.message = c.r + str(e) + c.w
             g.content = g.content or content.generate_songlist_display(
@@ -637,17 +633,14 @@ def yt_url(url: str, print_title: bool = False):
             return
 
         g.browse_mode = "normal"
-        v = Video(p['id'], p['title'], int(p['duration']['secondsText']))
-        if p and isinstance(p, dict):
-            v_title = p.get("title")
+        v = Video(p.videoid, p.title, p.length)
         g.model.songs.append(v)
-        v_ids.add(v_id)
 
     if not g.command_line:
         g.content = content.generate_songlist_display()
 
-    if print_title and v_title:
-        util.xprint(v_title)
+    if print_title:
+        util.xprint(v.title)
 
 
 @command(r'url_file\s(\S+)', 'url_file')
