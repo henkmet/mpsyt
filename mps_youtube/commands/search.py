@@ -624,20 +624,22 @@ def yt_url(url: str, print_title: bool = False):
 
     v_ids = set()
     v_title = None
-for url in url_list:
-    try:
-        v_id = pafy.extract_video_id(url)
+    for url in url_list:
+        try:
+            v_id = pafy.extract_video_id(url)
             if v_id in v_ids:
                 continue
             p = pafy.get_video_info(v_id)
-    except (IOError, ValueError) as e:
-        g.message = c.r + str(e) + c.w
+        except (IOError, ValueError) as e:
+            g.message = c.r + str(e) + c.w
             g.content = g.content or content.generate_songlist_display(
                     zeromsg=g.message)
             return
 
         g.browse_mode = "normal"
-        v = Video(p.videoid, p.title, p.length)
+        v = Video(p['id'], p['title'], int(p['duration']['secondsText']))
+        if p and isinstance(p, dict):
+            v_title = p.get("title")
         g.model.songs.append(v)
         v_ids.add(v_id)
 
