@@ -624,9 +624,12 @@ def yt_url(url: str, print_title: bool = False):
 
     v_ids = set()
     v_title = None
-    for url in url_list:
+for url in url_list:
         try:
-            p = util.get_pafy(u)
+            v_id = pafy.extract_video_id(url)
+            if v_id in v_ids:
+                continue
+            p = pafy.get_video_info(v_id)
         except (IOError, ValueError) as e:
             g.message = c.r + str(e) + c.w
             g.content = g.content or content.generate_songlist_display(
