@@ -26,8 +26,7 @@ def helptext():
         {2}r <number>{1} - show videos related to video <number>
         {2}u <number>{1} - show videos uploaded by uploader of video <number>
         {2}x <number>{1} - copy item <number> url to clipboard. (See the note below) 
-        Note: This feature requires `pyperclip` which is installed automatically when you install yewtube but 
-        Linux users further need to install `xsel` or `xclip` manually using apt, dnf, pacman, zypper or whatever package manager you use.
+        Note: This feature requires `pyperclip`
         Visit https://pyperclip.readthedocs.io/en/latest/index.html#not-implemented-error for more info.
 
         {2}q{1}, {2}quit{1} - exit mpsyt

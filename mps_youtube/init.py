@@ -286,7 +286,7 @@ def _get_version_info():
     except Exception:
         pass
 
-    out = "yewtube version    : " + __version__
+    out = "mpsyt version    : " + __version__
     out += "\nyt_dlp version     : " + ytdlp_version
     out += "\nPython version     : " + sys.version
     out += "\nProcessor          : " + platform.processor()
