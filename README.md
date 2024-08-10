@@ -65,7 +65,7 @@ Music Album Matching
 
 ![](http://mps-youtube.github.io/yewtube/album-2.png)
 
-An album title can be specified and mps-youtube will attempt to find matches for each track of the album, based on title and duration.  Type ``help search`` for more info.
+An album title can be specified and mpsyt will attempt to find matches for each track of the album, based on title and duration.  Type ``help search`` for more info.
 
 Customisation
 
@@ -90,7 +90,7 @@ Linux
 
 To install the experimental development version and try the latest features::
 
-    $ pip3 install --user -U git+https://github.com/otisdog8/termitube.git
+    $ pip3 install --user -U git+https://github.com/henkmet/mpsyt.git
 
 Installing youtube-dl is highly recommended::
 
@@ -98,7 +98,7 @@ Installing youtube-dl is highly recommended::
     and to upgrade:
     $ pip3 install --user youtube-dl --upgrade
 
-(youtube-dl version dowloaded directly from youtube-dl website can't be used by mps-youtube. While the version in the repositories is usually outdated)
+(youtube-dl version dowloaded directly from youtube-dl website can't be used by mpsyt. While the version in the repositories is usually outdated)
 
 For mpris2 support, install the python bindings for dbus and gobject::
 
@@ -110,7 +110,7 @@ If you would like to locally build the container you can run the following steps
 
 Check out this repo::
 
-    git clone https://github.com/otisdog8/termitube.git
+    git clone https://github.com/henkmet/mpsyt.git
 
 Enter the directory and run docker build::
 
