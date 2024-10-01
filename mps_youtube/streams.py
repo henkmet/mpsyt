@@ -145,7 +145,7 @@ def select(slist, q=0, audio=False, m4a_ok=True, maxres=None):
         if re.search(r'mpv|vlc', config.PLAYER.get):
             acceptable_video_types.append('video_only')
 
-         streams = [x for x in slist if x['mtype'] in acceptable_video_types and okres(x)]
+        streams = [x for x in slist if x['mtype'] in acceptable_video_types and okres(x)]
 
         if not config.VIDEO_FORMAT.get == "auto":
             if config.VIDEO_FORMAT.get == "mp4":
