@@ -1,3 +1,4 @@
+import re
 import time
 import threading
 from urllib.request import urlopen
@@ -37,6 +38,25 @@ def prune():
 
 def get(vid, force=False, callback=None, threeD=False):
     """ Get all streams as a dict.  callback function passed to get_pafy. """
+
+    def get_mtype(resolution, acodec, url):
+        """
+        Return the media type of the stream as a string.
+
+        Returns "audio" for audio only streams, "video_only" for video only
+        streams, and "video" for video and audio streams (for backward
+        compatibility with existing code).
+        """
+        if 'audio' in resolution:
+            return 'audio'
+        if '//manifest' not in url:
+            if acodec and acodec != 'none':
+                return 'video'
+            else:
+                return 'video_only'
+        else:
+            return '?'
+
     now = time.time()
     ytid = vid.ytid
     have_stream = g.streams.get(ytid) and g.streams[ytid]['expiry'] > now
@@ -62,11 +82,25 @@ def get(vid, force=False, callback=None, threeD=False):
         ps = p.allstreams if threeD else [x for x in p.allstreams
                                           if not x.threed]
 
+    # Fetch all the audio only streams.  Sort the list by the highest
+    # quality stream in descending order.
+    audio_only_streams = [
+        s for s in ps
+        if s.get('acodec', 'none') != 'none'
+            and s.get('resolution', None).lower() == 'audio only'
+    ]
+    sorted_audio_only_streams = sorted(
+        audio_only_streams,
+        key=lambda s: [s['quality'], s['abr']],
+        reverse=True
+    )
+
     streams = [{"url": s.url,
                 "ext": s.extension,
                 "quality": s.quality,
                 "rawbitrate": s.rawbitrate,
-                "mtype": s.mediatype,
+                "mtype": get_mtype(s['resolution'], s.get('acodec', None), s['url']),
+                "audio_url": sorted_audio_only_streams[0]['url'] if len(sorted_audio_only_streams) > 0 else '',
                 "size": -1} for s in ps]
 
     g.streams[ytid] = dict(expiry=p.expiry, meta=streams)
@@ -104,7 +138,15 @@ def select(slist, q=0, audio=False, m4a_ok=True, maxres=None):
                 streams = [x for x in slist if x['mtype'] == "audio"]
         streams = sorted(streams, key=getbitrate, reverse=True)
     else:
-        streams = [x for x in slist if x['mtype'] == "normal" and okres(x)]
+        # Determine whether the player supports video_only files with separate
+        # audio streams.  MPlayer currently only supports audio files local to
+        # the filesystem.
+        acceptable_video_types = ['video']
+        if re.search(r'mpv|vlc', config.PLAYER.get):
+            acceptable_video_types.append('video_only')
+
+         streams = [x for x in slist if x['mtype'] in acceptable_video_types and okres(x)]
+
         if not config.VIDEO_FORMAT.get == "auto":
             if config.VIDEO_FORMAT.get == "mp4":
                 streams = [x for x in streams if x['ext'] == "mp4"]
@@ -113,7 +155,7 @@ def select(slist, q=0, audio=False, m4a_ok=True, maxres=None):
             if config.VIDEO_FORMAT.get == "3gp":
                 streams = [x for x in streams if x['ext'] == "3gp"]
             if not streams:
-                streams = [x for x in slist if x['mtype'] == "normal" and okres(x)]
+                streams = [x for x in slist if x['mtype'] in acceptable_video_types and okres(x)]
         streams = sorted(streams, key=getq, reverse=True)
 
     util.dbg("select stream, q: %s, audio: %s, len: %s", q, audio, len(streams))
