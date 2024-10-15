@@ -20,9 +20,6 @@ class vlc(CmdPlayer):
             print('[VLC DUMMY INTERFACE] Playing "{0}" ...'.format(self.song.title))
             args.extend(('-I', 'dummy')) # vlc without gui
 
-        if 'audio_url' in self.stream and self.stream['mtype'] == 'video_only':
-            util.list_update(f'--input-slave={self.stream["audio_url"]}', args)
-
         util.list_update("--play-and-exit", args)
 
         return [self.player] + args + [self.stream['url']]
