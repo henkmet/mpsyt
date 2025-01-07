@@ -73,9 +73,9 @@ class BasePlayer:
 
             try:
                 self.video, self.stream, self.override = stream_details(
-                                                            self.song,
-                                                            override=self.override,
-                                                            softrepeat=self.softrepeat)
+                        self.song,
+                        override=self.override,
+                        softrepeat=self.softrepeat)
                 self._playsong()
 
             except KeyboardInterrupt:
@@ -84,9 +84,9 @@ class BasePlayer:
                 screen.reset_terminal()
                 g.message = c.y + "Playback halted" + c.w
                 raise KeyboardInterrupt
-                break
+            break
 
-            # skip forbidden, video removed/no longer available, etc. tracks
+        # skip forbidden, video removed/no longer available, etc. tracks
             except TypeError:
                 self.song_no += 1
                 pass
@@ -123,20 +123,20 @@ class BasePlayer:
         # pylint: disable=R0911,R0912
         if not config.PLAYER.get or not util.has_exefile(config.PLAYER.get):
             g.message = "Player not configured! Enter %sset player <player_app> "\
-                "%s to set a player" % (c.g, c.w)
+                    "%s to set a player" % (c.g, c.w)
             return
 
         if config.NOTIFIER.get:
             subprocess.Popen(shlex.split(config.NOTIFIER.get) + [self.song.title])
 
         size = streams.get_size(self.song.ytid, self.stream['url'])
-        songdata = (self.song.ytid, self.stream['ext'] + " " + self.stream['quality'],
+        songdata = (self.song.ytid, '' if self.stream.get('ext') is None else self.stream.get('ext') + " " + self.stream['quality'],
                     int(size / (1024 ** 2)))
         self.songdata = "%s; %s; %s Mb" % songdata
         screen.writestatus(self.songdata)
 
         self._launch_player()
-        
+
         if config.HISTORY.get:
             history.add(self.song)
 
@@ -225,9 +225,9 @@ class BasePlayer:
         pct = (float(elapsed_s) / songlength * 100) if songlength else 0
 
         status_line = "%02i:%02i:%02i %s" % (
-            display_h, display_m, display_s,
-            ("[%.0f%%]" % pct).ljust(6)
-        )
+                display_h, display_m, display_s,
+                ("[%.0f%%]" % pct).ljust(6)
+                )
 
         if volume:
             vol_suffix = " vol: %d%%" % volume
