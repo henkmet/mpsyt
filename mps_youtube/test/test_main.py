@@ -27,4 +27,5 @@ class TestMain(unittest.TestCase):
         self.assertEqual(mps.num_repr(1000000001), '1.0B')
 
 if __name__ == '__main__':
+    freeze_support()
     unittest.main()
